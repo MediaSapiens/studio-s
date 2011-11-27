@@ -1,9 +1,17 @@
 import uuid, os
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.models import ContentType, ContentTypeManager
 from django.contrib.contenttypes import generic
 
+CONTENTTYPES = ['video', 'image']
+
+class MediaManager(ContentTypeManager):
+    def get_query_set(self):
+        return super(ContentTypeManager, self).get_query_set().filter(name__in=CONTENTTYPES)
+
+##class MediaContentType(ContentType):
+##    objects = MediaManager()
 
 def images(instance, filename):
     ext = filename.split('.')[-1]
