@@ -3,3 +3,13 @@
 3. Adding models
 4. Adding templates
 5. Adding api
+
+
+gallery:
+    item
+        video
+            format
+            format
+        image
+        video
+
