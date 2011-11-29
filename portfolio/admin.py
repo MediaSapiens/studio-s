@@ -6,14 +6,13 @@ from django.conf import settings
 
 class InlineGalleryItem(GenericCollectionTabularInline):
         model = GalleryItem
-
-class GalleryItemInline(generic.GenericStackedInline):
-    model = GalleryItem
+        sortable_field_name = "position"
 
 class GalleryAdmin(admin.ModelAdmin):
     inlines = [
         InlineGalleryItem,
     ]
+    sortable_field_name = "position"
     
     class Media:
         js = (settings.MEDIA_URL + 'js/genericcollections.js',)
@@ -29,18 +28,10 @@ class VideoAdmin(admin.ModelAdmin):
 class ImageInline(admin.StackedInline):
 	model = Image
 
-class VideoInline(admin.StackedInline):
-	model = Video
-
-class GIAdmin(admin.ModelAdmin):
-	inlines = [
-        VideoInline
-    ]
 
 
-admin.site.register(Project)
 admin.site.register(Gallery, GalleryAdmin)
-admin.site.register(GalleryItem)#, GIAdmin)
+admin.site.register(GalleryItem)
 admin.site.register(Video, VideoAdmin)
 admin.site.register(VideoFormat)
 admin.site.register(Image)

@@ -1,6 +1,6 @@
 Django
-django-tastypie
 South
 django-annoying
 MySQL-python
 PIL
+django-grappelli

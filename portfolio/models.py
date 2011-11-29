@@ -18,14 +18,19 @@ def images(instance, filename):
     filename = "%s.%s" % (uuid.uuid4(), ext)
     return os.path.join('images', filename)
 
-class Project(models.Model):
-    title = models.CharField(_('Project title'), max_length=255,blank=True,null=True)
-
 class Gallery(models.Model):
-    project = models.ForeignKey("Project")
     title = models.CharField(_('Gallery title'), max_length=255)
     description = models.TextField(blank=True,null=True)
     media = generic.GenericRelation("GalleryItem", related_name="media")
+    position = models.PositiveSmallIntegerField("Position")
+
+    class Meta:
+        ordering = ['position']
+
+    def __unicode__(self):
+        return self.title
+
+
 
 class GalleryItem(models.Model):
     gallery = models.ForeignKey(Gallery)
@@ -33,6 +38,13 @@ class GalleryItem(models.Model):
     content_type = models.ForeignKey(ContentType)
     object_id = models.PositiveIntegerField(db_index=True)
     content_object = generic.GenericForeignKey(ct_field="content_type", fk_field="object_id")
+    position = models.PositiveSmallIntegerField("Position", default=0)
+
+    class Meta:
+        ordering = ['position']
+
+    def __unicode__(self):
+        return 'id %s' % str(self.pk)
 
 class Image(models.Model):
     image = models.ImageField(upload_to='images', blank=True,null=True)
