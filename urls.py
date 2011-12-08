@@ -13,8 +13,11 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^api/galleries/$', 'api.views.galleries'),
+    url(r'^api/gallery/(?P<gallery_id>\d+)/$', 'api.views.gallery'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^grappelli/', include('grappelli.urls')),
+
+    url(r'^$', 'portfolio.views.main'),
 )
 
 if settings.DEBUG:
